@@ -18,13 +18,54 @@
 *
 * What is the value of the first triangle number to have over five hundred divisors?
 * 
-* Answer: ""
+* Answer: "76576500"
+* Took around 15 minutes with this crude method.
 */
 
 #include <stdio.h>
 
+int get_factors(int number);
+
 int main(int argc, char* argv[])
 {
 	printf("Solving problem 12!\n");
+    
+    int index = 1;
+    int cur_num = 0;
+    int done = 0;
+    int num_factors = 0;
+
+    while(!done)
+    {
+        cur_num = cur_num + index;  //add the next integer to the current triangle number
+        index++;
+        num_factors = get_factors(cur_num);
+        if(num_factors > 200)
+        {
+            printf("%d: %d factors.\n", cur_num, num_factors);
+        }
+        if(num_factors > 500)
+        {
+            done = 1;
+        }
+    }
+
 	return 0;
 }
+
+
+int get_factors(int number)
+{
+    int index = 1;
+    int num_factors = 0;
+    while(index <= number)  //todo: probably can optimize this
+    {
+        if(number%index == 0)
+        {
+            num_factors++;
+        }
+        index++;
+    }
+    return num_factors;
+}
+
