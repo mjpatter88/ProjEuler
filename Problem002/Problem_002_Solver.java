@@ -10,8 +10,6 @@
  * Answer: "4613732"
  */
 
-package problem_002;
-
 
 /**
  * TODO Comment this class
