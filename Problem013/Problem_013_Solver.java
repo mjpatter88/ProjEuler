@@ -125,9 +125,26 @@ public class Problem_013_Solver
             System.exit(1);
         }
 
-        //Put all the numbers into a 2d array
+        //Put all the numbers into a 2d array by digit
+        int[][] digits = new int[100][50];  //100 rows, each 50 digits long
+        for(int row=0; row<100; row++)
+        {
+            String newLine = inp.nextLine();
+            for(int col=0; col<newLine.length(); col++)
+            {
+                digits[row][col] = Integer.parseInt(String.valueOf(newLine.charAt(col)));
+            }
+        }
 
         //Print each array
+        for(int row=0; row<100; row++)
+        {
+            for(int col=0; col<50; col++)
+            {
+                System.out.print(digits[row][col]);
+            }
+            System.out.println();
+        }
 
         //Sum each column to get the carry value
     }
