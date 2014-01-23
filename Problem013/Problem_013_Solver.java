@@ -101,7 +101,7 @@
  * 20849603980134001723930671666823555245252804609722
  * 53503534226472524250874054075591789781264330331690
  *
- * Answer = ""
+ * Answer = "5537376230"
  */
 
 import java.io.File;
@@ -147,5 +147,21 @@ public class Problem_013_Solver
         }
 
         //Sum each column to get the carry value
+        int remainder = 0;
+
+        for(int col=49; col>=0; col--)//We need to work backwards to add right to left
+        {
+            int partialSum = remainder; //0 the first time, after that the previous remainder.
+            for(int row=0; row<100; row++)
+            {
+                partialSum += digits[row][col];
+            }
+            int digit = partialSum % 10;    //get the ones place
+            remainder = partialSum/10;  //shift digits
+
+            System.out.print(digit);
+        }
+        System.out.print("    " + remainder);
+
     }
 }
