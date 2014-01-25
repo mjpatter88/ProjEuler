@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -26,7 +25,7 @@ public class Problem_017_Solver
      *      Recursive?
      *
      *      Idea 3:
-     *      I think I'm making this too complicated. Create a map with the 40ish possibilites, then just use it.
+     *      I think I'm making this too complicated. Create a map with the 40ish possibilities, then just use it.
      */
 
     private static HashMap<Integer, Integer> numToDigits;
