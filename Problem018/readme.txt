@@ -4,6 +4,7 @@ Then I'll write a dynamic programming method.
 I'll compare the performance, and then try the dp method on problem 67.
 
 This structure is similar to a binary tree, but slightly different since adjacent nodes share one child.
+I think this technically makes it not a "tree" but I'm calling it that for now.
 I'll first have to write some data structures and some routines to populate them from a text file of numbers.
 Node class
 Tree class
