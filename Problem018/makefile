@@ -1,16 +1,10 @@
 all: main
 
-main: main.o Node.o Tree.o
-	g++ -o main main.o Node.o Tree.o
+main: main.o
+	g++ -o main main.o
 
-main.o: main.cpp Node.h Tree.h
+main.o: main.cpp
 	g++ -c main.cpp
-
-Tree.o: Tree.cpp Node.h
-	g++ -c Tree.cpp
-
-Node.o: Node.cpp Node.h
-	g++ -c Node.cpp
 
 clean:
 	rm -f *.o
