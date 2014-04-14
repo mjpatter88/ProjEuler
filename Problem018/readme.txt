@@ -18,3 +18,15 @@ I think the input file should basically look like:
 (This is also the format used in problem 67. Also in both problems all values are 2 digit numbers.)
 I can maybe pull all the text out of the website source? Will have to check on this.
 Done. Numbers now in the "numbers.txt" file.
+
+
+
+
+
+
+
+
+
+
+After I'm done, check out this link for possible improvements:
+http://stackoverflow.com/questions/9154242/need-assistance-with-algorithm-to-find-the-maximum-path-in-a-dag

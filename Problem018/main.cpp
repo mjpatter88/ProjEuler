@@ -1,11 +1,16 @@
+/*
+ * Answer: 1074
+ */
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 #define NUM_ROWS 15
 
 void bruteSolve(int** arr);
 void dynSolve(int **arr);
 void printArr(int **arr);
+int recSolve(int** arr, int row, int col);
 
 int main(int argc, char* argv[])
 {
@@ -61,7 +66,24 @@ int main(int argc, char* argv[])
 
 void bruteSolve(int** arr)
 {
+    int max = recSolve(arr, 0, 0);
+    std::cout << "Answer: " << max << std::endl;
     return;
+}
+
+int recSolve(int** arr, int row, int col)
+{
+    // Break condition when it's in the last row of the pyramid
+    if(row == NUM_ROWS-1)
+    {
+        return arr[row][col];
+    }
+    else
+    {
+        // This node's value plus max of left child node and right child node
+        int max = arr[row][col] + std::max(recSolve(arr, row+1, col), recSolve(arr, row+1, col+1));
+        return max;
+    }
 }
 
 void dynSolve(int **arr)
