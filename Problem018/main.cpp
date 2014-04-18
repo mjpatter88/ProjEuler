@@ -7,7 +7,7 @@
 #include <string>
 
 #define NUM_ROWS 15
-#define DEBUG false
+#define DEBUG true
 
 void bruteSolve(int** arr);
 void dynSolve(int **arr);
@@ -15,7 +15,7 @@ void bottomUpSolve(int **arr);
 
 void printArr(int **arr);
 int recBrute(int** arr, int row, int col);
-
+int recDyn(int** arr, int** arrAnsw, int row, int col);
 int main(int argc, char* argv[])
 {
     /*
@@ -92,10 +92,6 @@ int main(int argc, char* argv[])
     }
 
     pSolve(arr);
-    //bruteSolve(arr);
-    //dynSolve(arr);
-    //bottomUpSolve(arr);
-
 
     //Delete each inner array
     for(int i=0; i<NUM_ROWS; i++)
@@ -139,15 +135,67 @@ void dynSolve(int **arr)
     {
         std::cout << "Dynamic programming soltuion..." << std::endl;
     }
+    //We need an array to hold the answers as they are calculated.
+    int** arrAns = new int*[NUM_ROWS];
+    for(int i=0; i<NUM_ROWS; i++)   //Create each inner array
+    {
+        arrAns[i] = new int[i+1];  //Each row has one more element than the previous
+        //Initialize everything to -1 so we know what has not yet been calculated.
+        for(int j=0; j<i+1; j++)
+        {
+            arrAns[i][j] = -1;
+        }
+    }
+    
+    int max = recDyn(arr, arrAns, 0, 0);
+    std::cout << "Answer: " << max << std::endl;
     return;
+}
+
+int recDyn(int** arr, int** arrAns, int row, int col)
+{
+    // Break condition if we have already calculated the answer
+    if(arrAns[row][col] != -1)
+    {
+        return arrAns[row][col];
+    }
+    // Break condition when it's in the last row of the pyramid
+    else if(row == NUM_ROWS-1)
+    {
+        return arr[row][col];
+    }
+    else
+    {
+        // This node's value plus max of left child node and right child node
+        int max = arr[row][col] + std::max(recDyn(arr, arrAns, row+1, col), recDyn(arr, arrAns, row+1, col+1));
+        arrAns[row][col] = max;    //Save the value we just calculated
+        return max;
+    }
 }
 
 void bottomUpSolve(int **arr)
 {
     if(DEBUG)
     {
-        std::cout << "Clever bottum-up soltuion..." << std::endl;
+        std::cout << "Clever bottom-up soltuion..." << std::endl;
     }
+    //Basic idea is to start at the bottom and sum upwards.
+    for(int i=NUM_ROWS-2; i>=0; i--) //Start at the second to bottom row
+    {
+        for(int j=0; j<i+1; j++)
+        {
+            // Add whichever child is bigger
+            if(arr[i+1][j] > arr[i+1][j+1])
+            {
+                arr[i][j] += arr[i+1][j];
+            }
+            else
+            {
+                arr[i][j] += arr[i+1][j+1];
+            } 
+        }
+    }
+    std::cout << "Answer: " << arr[0][0] << std::endl;
     return;
 }
 
