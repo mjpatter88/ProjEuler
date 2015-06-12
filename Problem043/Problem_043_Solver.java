@@ -30,10 +30,13 @@
 
 import java.util.Set;
 import java.util.HashSet;
+import java.lang.IllegalArgumentException;
+import java.util.Iterator;
 
 public class Problem_043_Solver
 {
-    public int divisors[] = {17, 13, 11, 7, 5, 3, 2};
+    public static int divisors[] = {17, 13, 11, 7, 5, 3, 2};
+    public static boolean DEBUG = true;
 
     public static void main(String args[])
     {
@@ -51,30 +54,133 @@ public class Problem_043_Solver
         {
             digits.add(i);
         }
+
+        // make the first call
+        filterDigits(digits, 0);
+
     }
 
-    public static boolen filterDigits(Set digits, int length, int divisorIndex)
+    public static boolean filterDigits(Set<Integer> digits, int divisorIndex)
     {
         // Can you make a number 'length' digits long that is divisible by 'divisor[divisorIndex]'?
         // If no, return false.
         // If yes, remove those digits from the set, and call it on the next divisor.
-        // If all numbers used, return true and print which digits you used. (success)
+        // If all numbers used, return true and then print which digits you used. (success)
 
         // This means success!
         if(digits.isEmpty())
         {
             return true;
         }
+        if(divisorIndex >= divisors.length)
+        {
+            System.out.println("Problem! DivisorIndex = " + divisorIndex);
+            throw new IllegalArgumentException();
+        }
+        int divisor = divisors[divisorIndex];
+        while(divisor <= 999)
+        {
+            // check if divisor has all unique digits and each of those digits is in the 'digits' set.
+            if(digitsInSet(digits, divisor))
+            {
+                if(DEBUG)
+                {
+                    System.out.print("Index: " + divisorIndex + " Divisor: " + divisor + " Digits in set: ");
+                    printSet(digits);
+                    System.out.println();
+                }
+                //Remove the used digits before making the recursive call
+                removeDigitsFromSet(digits, divisor);
+                // If the recursive call returns true, this is part of the solution!
+                if(filterDigits(digits, divisorIndex+1))
+                {
+                    int[] solution = intToDigits(divisor);
+                    for(int i=0; i<solution.length; i++)
+                    {
+                        System.out.print(solution[i]);
+                    }
+                }
+                // Add in the digits we removed so we can keep looking
+                addDigitsToSet(digits, divisor);
+            }
+            // Keep looking, we want to print all of the solutions.
+            divisor += divisors[divisorIndex];
+        }
+        return false; // If we make it this far without a solution, return false.
+    }
+
+    // Returns true if each of the digits in 'number' is in the set
+    public static boolean digitsInSet(Set<Integer> digits, int number)
+    {
+        int[] numberDigits = intToDigits(number);
+        if(numberDigits[0] == numberDigits[1] || numberDigits[0] == numberDigits[2] ||
+                numberDigits[1] == numberDigits[2])
+        {
+            return false;   // They must all be unique to be in the set by definition.
+        }
+        // Ugly, but works for our purposes
+        return (digits.contains(numberDigits[0]) && digits.contains(numberDigits[1]) &&
+                        digits.contains(numberDigits[2]));
+    }
+
+    public static void removeDigitsFromSet(Set<Integer> digits, int number)
+    {
+        int[] toRemove = intToDigits(number);
+        for(int i=0; i<toRemove.length; i++)
+        {
+            digits.remove(toRemove[i]);
+        }
+    }
+
+    public static void addDigitsToSet(Set<Integer> digits, int number)
+    {
+        int[] toAdd = intToDigits(number);
+        for(int i=0; i<toAdd.length; i++)
+        {
+            digits.add(toAdd[i]);
+        }
+    }
+
+    // Returns an array of ints that is the list of digits in 'number'
+    // Automatically pads left with zeros if the number does not have 3 digits.
+    // The subtraction of '0' is to convert the char ascii value to the int number.
+    public static int[] intToDigits(int number)
+    {
+        int[] retDigits = new int[3];
+        char[] digits = String.valueOf(number).toCharArray();
+        if(digits.length == 1)
+        {
+            retDigits[0] = 0;
+            retDigits[1] = 0;
+            retDigits[2] = digits[0] - '0';
+        }
+        else if(digits.length == 2)
+        {
+            retDigits[0] = 0;
+            retDigits[1] = digits[0] - '0';
+            retDigits[2] = digits[1] - '0';
+        }
+        else if(digits.length == 3)
+        {
+            retDigits[0] = digits[0] - '0';
+            retDigits[1] = digits[1] - '0';
+            retDigits[2] = digits[2] - '0';
+        }
         else
         {
-            int divisor = divisors[divisorIndex];
-            while(divisor <= 999)
-            {
-                //TODO: check if divisor has all unique digits and each of those digits is in the 'digits' set.
-                divisor += divisor;
-            }
+            System.out.println("Problem in intsToDigits. Length: " + digits.length);
+            throw new IllegalArgumentException();
         }
-        return false;
+        return retDigits;
+    }
+
+    public static void printSet(Set<Integer> set)
+    {
+        Iterator<Integer> iter = set.iterator();
+        while(iter.hasNext())
+        {
+            System.out.print(iter.next());
+        }
     }
 
 }
