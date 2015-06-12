@@ -32,11 +32,15 @@ import java.util.Set;
 import java.util.HashSet;
 import java.lang.IllegalArgumentException;
 import java.util.Iterator;
+import java.lang.StringBuilder;
+import java.math.BigInteger;
 
 public class Problem_043_Solver
 {
     public static int divisors[] = {17, 13, 11, 7, 5, 3, 2};
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
+    public static String answer = "";
+    public static BigInteger sum = new BigInteger("0");
 
     public static void main(String args[])
     {
@@ -56,22 +60,19 @@ public class Problem_043_Solver
         }
 
         // make the first call
-        filterDigits(digits, 0);
+        filterDigitsFirst(digits, 0);
+
+        System.out.println("Sum: " + sum);
 
     }
 
-    public static boolean filterDigits(Set<Integer> digits, int divisorIndex)
+    public static boolean filterDigitsFirst(Set<Integer> digits, int divisorIndex)
     {
         // Can you make a number 'length' digits long that is divisible by 'divisor[divisorIndex]'?
         // If no, return false.
         // If yes, remove those digits from the set, and call it on the next divisor.
         // If all numbers used, return true and then print which digits you used. (success)
 
-        // This means success!
-        if(digits.isEmpty())
-        {
-            return true;
-        }
         if(divisorIndex >= divisors.length)
         {
             System.out.println("Problem! DivisorIndex = " + divisorIndex);
@@ -89,22 +90,68 @@ public class Problem_043_Solver
                     printSet(digits);
                     System.out.println();
                 }
-                //Remove the used digits before making the recursive call
+                // Remove the used digits before making the recursive call
                 removeDigitsFromSet(digits, divisor);
-                // If the recursive call returns true, this is part of the solution!
-                if(filterDigits(digits, divisorIndex+1))
-                {
-                    int[] solution = intToDigits(divisor);
-                    for(int i=0; i<solution.length; i++)
-                    {
-                        System.out.print(solution[i]);
-                    }
-                }
+
+                // Make the recursive call
+                answer += new StringBuilder("" + divisor).reverse().toString();
+                filterDigits(digits, divisorIndex+1, divisor/10);
+                answer = "";
+
                 // Add in the digits we removed so we can keep looking
                 addDigitsToSet(digits, divisor);
             }
             // Keep looking, we want to print all of the solutions.
             divisor += divisors[divisorIndex];
+        }
+        return false; // If we make it this far without a solution, return false.
+    }
+
+    // Similar to the previous method, but it only looks for one new number to add.
+    // prevDigits are the last two digits needs to check divisibility
+    public static boolean filterDigits(Set<Integer> digits, int divisorIndex, int prevDigits)
+    {
+        // This means success!
+        if(digits.size() == 1)
+        {
+            Iterator<Integer> iter = digits.iterator();
+            System.out.print("Number found: ");
+            answer += iter.next();
+            String realAnswer = new StringBuilder(answer).reverse().toString(); // Reverse of stored answer
+            System.out.println(realAnswer);
+            sum = sum.add(new BigInteger(realAnswer));
+            answer = answer.substring(0, answer.length()-1);
+            return true;
+        }
+        if(divisorIndex >= divisors.length)
+        {
+            System.out.println("Problem! DivisorIndex = " + divisorIndex);
+            throw new IllegalArgumentException();
+        }
+        int divisor = divisors[divisorIndex];
+        
+        Iterator<Integer> iter = digits.iterator();
+        while(iter.hasNext())
+        {
+            int next = iter.next();
+            int newNum = (next * 100) + prevDigits;
+            if(newNum % divisor == 0)
+            {
+                if(DEBUG)
+                {
+                    System.out.print("Index: " + divisorIndex + " Divisor: " + divisor + " Digits in set: ");
+                    printSet(digits);
+                    System.out.println();
+                }
+                // We can't simply remove then add since we are using iterators
+                Set<Integer> newDigits = new HashSet<Integer>(digits);
+                newDigits.remove(next);
+
+                // Make the recursive call
+                answer += next;
+                filterDigits(newDigits, divisorIndex+1, newNum/10);
+                answer = answer.substring(0, answer.length()-1);
+            }
         }
         return false; // If we make it this far without a solution, return false.
     }
