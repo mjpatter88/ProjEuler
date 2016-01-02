@@ -7,8 +7,6 @@ class PokerHand():
 if __name__ == '__main__':
     with open('poker.txt') as input_file:
         for line in input_file:
-            player1_cards = line.split(" ")[:5]
-            player2_cards = line.split(" ")[5:]
-            player1_hand = PokerHand(player1_cards)
-            player2_hand = PokerHand(player2_cards)
+            player1_hand = PokerHand(line.split(" ")[:5])
+            player2_hand = PokerHand(line.split(" ")[5:])
 
