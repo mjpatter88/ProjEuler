@@ -1,4 +1,29 @@
 # Python 3
+from enum import IntEnum
+
+class Rank(IntEnum):
+    """
+    """
+    high_card = 0
+    one_pair = 1
+    two_pair = 2
+    three_of_a_kind = 3
+    straight = 4
+    flush = 5
+    full house = 6
+    four_of_a_kind = 7
+    straight_flush = 8
+    royal_flusH = 9
+
+
+class Card():
+    """
+    """
+    def __init__(self, card_string):
+        """
+        """
+        pass
+
 
 class PokerHand():
     """
