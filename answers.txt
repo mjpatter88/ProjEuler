@@ -37,3 +37,4 @@ Problem 43 ----- Answer: "16695334890"
 Problem 52 ----- Answer: "142857"
 Problem 54 ----- Answer:
 Problem 67 ----- Answer: "7273"
+Problem 74 ----- Answer: "402"
