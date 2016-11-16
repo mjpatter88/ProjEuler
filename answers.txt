@@ -34,5 +34,6 @@ Problem 29 ----- Answer: "9183"
 Problem 30 ----- Answer: "443839"
 Problem 35 ----- Answer: "55"
 Problem 43 ----- Answer: "16695334890"
+Problem 52 ----- Answer: "142857"
 Problem 54 ----- Answer:
 Problem 67 ----- Answer: "7273"
