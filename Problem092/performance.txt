@@ -3,3 +3,4 @@ Relative performance is what we care about, not absolute performance.
 
 First correct solution: 54.06s
 Use sets and split results: 49.3s
+Rework algorithm: 38.8s
