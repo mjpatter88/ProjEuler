@@ -35,6 +35,6 @@ for x in range(0, 1000000):
 
     num = sum_of_digit_squares(x)
     nums = {num + inc for inc in (0, 1, 4, 9, 16, 25, 36, 49, 64, 81)}
-    count += len(nums.intersection(resolve_to_89))
+    count += len(nums.intersection(resolve_to_1))
 
-print(f"Number of starting numbers below ten million that arrive at 89: {count}")
+print(f"Number of starting numbers below ten million that arrive at 89: {9999999 - count}")
