@@ -1,3 +1,6 @@
+import itertools
+
+
 def sum_of_digit_squares(number):
     return sum(int(digit) ** 2 for digit in str(number))
 
@@ -31,10 +34,10 @@ count = 0
 # loop 0 - 99,999. We need the 0 for 1,000,000, 2,000,000, etc.
 # for each number, add SoS for each digit in the millionths place
 # calculate intersection of all ten of these values
-for x in range(0, 1000000):
-
+for x in range(0, 100000):
     num = sum_of_digit_squares(x)
-    nums = {num + inc for inc in (0, 1, 4, 9, 16, 25, 36, 49, 64, 81)}
-    count += len(nums.intersection(resolve_to_1))
+    digit_increments = {0, 1, 4, 9, 16, 25, 36, 49, 64, 81}
+    candidates = [num + first + second for first, second in itertools.product(digit_increments, digit_increments)]
+    count += sum(1 for n in candidates if n in resolve_to_1)
 
 print(f"Number of starting numbers below ten million that arrive at 89: {9999999 - count}")

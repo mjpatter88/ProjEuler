@@ -1,13 +1,18 @@
 All times captured using ubuntu vm and desktop pc.
 Relative performance is what we care about, not absolute performance.
 
-First correct solution: 54.06s
-Use sets and split results: 49.3s
-Rework algorithm: 38.8s
-Rework algo again: 4.9s (calculate 10 at a time.)
-Use smaller set and subtract: 4.6s
+1)First correct solution: 54.06s
+2)Use sets and split results: 49.3s
+3)Rework algorithm: 38.8s
+4)Rework algo again: 4.9s (calculate 10 at a time.)
+5)Use smaller set and subtract: 4.6s
+6)Rework algo again: 1.7s (calculate 1000 at a time.)
 
 
 
+Note after step 5:
 I believe the performance could be improved by another factor of 10 by applying the same algo improvement again.
 Calculate 0->10,000, use this to calc up to 100,0000, etc. You would essentially be doing 100 at a time instead of 10.
+
+Note after step 6:
+I tried what the note above describes. Got a speedup of 3x.
