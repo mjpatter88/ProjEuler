@@ -29,10 +29,17 @@ for num in range(1, 568):
 
 count = len(resolve_to_89)
 
-for x in range(568, 10000000):
+# loop 568 - 99,999
+for x in range(568, 100000):
     num = sum_of_digit_squares(x)
     if num in resolve_to_89:
         count += 1
+
+# loop 100,000 - 999,999
+for x in range(100000, 1000000):
+    num = sum_of_digit_squares(x)
+    nums = {num + inc for inc in (0, 1, 4, 9, 16, 25, 36, 49, 64, 81)}
+    count += len(nums.intersection(resolve_to_89))
 
 
 print(f"Number of starting numbers below ten million that arrive at 89: {count}")
