@@ -1,0 +1,4 @@
+All times captured using ubuntu vm and desktop pc.
+Relative performance is what we care about, not absolute performance.
+
+First correct solution: 54.06s
