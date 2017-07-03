@@ -22,7 +22,7 @@ Problem 17 ----- Answer: "21124"
 Problem 18 ----- Answer: "1074"
 Problem 19 ----- Answer: "171"
 Problem 20 ----- Answer: "648"
-Problem 21
+Problem 21 ----- Answer: "31626"
 Problem 22 ----- Answer: "871198282"
 Problem 23
 Problem 24
