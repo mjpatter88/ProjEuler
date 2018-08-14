@@ -28,7 +28,7 @@ Problem 23 ----- Answer: "4179871"
 Problem 24 ----- Answer: "2783915460"
 Problem 25 ----- Answer: "4782"
 Problem 26
-Problem 27
+Problem 27 ----- Answer: "-59231"
 Problem 28 ----- Answer: "66914100"
 Problem 29 ----- Answer: "9183"
 Problem 30 ----- Answer: "443839"
