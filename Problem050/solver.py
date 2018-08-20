@@ -8,6 +8,7 @@
 # 
 # Which prime, below one-million, can be written as the sum of the most consecutive primes?
 # 
+LIMIT = 1000000
 
 def gen_primes(limit):
     candidates = [True] * limit
@@ -20,30 +21,42 @@ def gen_primes(limit):
                 candidates[n] = False
             yield i
 
+primes = list(prime for prime in gen_primes(LIMIT))
+
+def get_sums(primes):
+    running_total = 0
+    results = [0]
+    for prime in primes:
+        running_total += prime
+        results.append(running_total)
+    return results
+
+sums = get_sums(primes)
+
+def get_sum(start, end):
+    return sums[end] - sums[start]
 
 def solve(limit):
     consec_prime_len = 0
     consec_prime_sum = 0
-    primes = list(prime for prime in gen_primes(limit))
     prime_set = set(primes)
     max_prime = max(primes)
     cur_len = 0
     running = True
     while cur_len < len(primes):
         starting_index = 0
-        starting_sum = sum(primes[starting_index:starting_index+cur_len])
+        starting_sum = get_sum(starting_index, starting_index+cur_len)
 
         if cur_len % 100 == 0:
             print(cur_len)
             print(starting_sum)
 
-        if starting_sum > 1000000:
-            print("Done")
+        if starting_sum > limit:
             break
 
         while starting_index <= (len(primes) - cur_len):
-            new_sum = sum(primes[starting_index:starting_index+cur_len])
-            if new_sum in prime_set:
+            new_sum = get_sum(starting_index, starting_index+cur_len)
+            if new_sum in prime_set and new_sum < limit:
                 if cur_len > consec_prime_len:
                     consec_prime_len = cur_len
                     consec_prime_sum = new_sum
