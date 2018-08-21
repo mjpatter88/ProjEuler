@@ -45,6 +45,7 @@ Problem 46 ----- Answer: "5777"
 Problem 48 ----- Answer: "9110846700"
 Problem 50 ----- Answer: "997651"
 Problem 52 ----- Answer: "142857"
+Problem 53 ----- Answer: "4075"
 Problem 54 ----- Answer:
 Problem 67 ----- Answer: "7273"
 Problem 74 ----- Answer: "402"
